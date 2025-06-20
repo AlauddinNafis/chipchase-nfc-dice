@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CHIPCHASE NFC Dice</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🎲 CHIPCHASE CIRCUITXP - NFC DICE</h1>
+  <p class="prompt">Tap the button below to roll the dice (0–3):</p>
+  <div class="dice" id="dice">🎲</div>
+  <button onclick="rollDice()">Roll Dice</button>
+  <audio id="rollSound" src="https://cdn.jsdelivr.net/gh/joshwcomeau/assets/dice-roll.mp3" preload="auto"></audio>
+
+  <script>
+    function rollDice() {
+      const diceEl = document.getElementById("dice");
+      const rollSound = document.getElementById("rollSound");
+
+      if (rollSound) {
+        rollSound.currentTime = 0;
+        rollSound.play().catch(() => {
+          console.log("Audio blocked by browser auto-play policy.");
+        });
+      }
+
+      diceEl.classList.add("animate");
+      let counter = 0;
+      const rollInterval = setInterval(() => {
+        const tempRoll = Math.floor(Math.random() * 4);
+        diceEl.textContent = tempRoll;
+        counter++;
+        if (counter >= 15) {
+          clearInterval(rollInterval);
+          diceEl.classList.remove("animate");
+        }
+      }, 200);
+    }
+  </script>
+</body>
+</html>
